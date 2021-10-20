@@ -2,20 +2,21 @@ title: REBOL Exploit Detection (via file_event)
 status: experimental
 description: This rule detects the file creation action that could leads to a possible "REBOL Exploit" execution. 
 level: high
+references: https://frsecure.com/blog/the-rebol-yell-new-rebol-exploit/
 author: Ariel Millahuel
 date: 2021/10/20
 tags:
     - attack.execution
     - attack.persistence
     - attack.t1137.001
-    - attack.t1024.002
+    - attack.t1204.002
 logsource:
     product: windows
     category: file_event
 detection:
     selection_path:
-        TargetFilename|startswith: 
-          - 'C:\ProgramData\Temp'
+        TargetFilename|contains: 
+          - '\ProgramData\Temp'
     selection_files:
         TargetFilename|endswith:
           - 'audiodriver.exe'
