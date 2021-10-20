@@ -1,0 +1,25 @@
+title: REBOL Exploit Detection (via file_event)
+status: experimental
+description: This rule detects the file creation action that could leads to a possible "REBOL Exploit" execution. 
+level: high
+author: Ariel Millahuel
+date: 2021/10/20
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.t1137.001
+    - attack.t1024.002
+logsource:
+    product: windows
+    category: file_event
+detection:
+    selection_path:
+        TargetFilename|startswith: 
+          - 'C:\ProgramData\Temp'
+    selection_files:
+        TargetFilename|endswith:
+          - 'audiodriver.exe'
+          - 'image.ico'
+    condition: selection_path and selection_files
+falsepositives:
+    - Unlikely
